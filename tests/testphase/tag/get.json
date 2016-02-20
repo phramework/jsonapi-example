@@ -15,7 +15,9 @@
     "headers": {
       "Content-Type": "{{{headerResponseContentType}}}"
     },
-    "ruleObjects": ["{{{responseBodyJsonapiCollection}}}"],
+    "ruleObjects": [
+      "{{{responseBodyJsonapiCollection}}}"
+    ],
     "export": {
       "tagId": "data.id"
     }

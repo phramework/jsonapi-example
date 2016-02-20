@@ -1,6 +1,6 @@
 {
   "meta": {
-    "order": 31
+    "order": 11
   },
   "request": {
     "url": "user/{{userId}}",
@@ -15,6 +15,8 @@
     "headers": {
       "Content-Type": "{{{headerResponseContentType}}}"
     },
-    "ruleObjects": ["{{{responseBodyJsonapiResource}}}"]
+    "ruleObjects": [
+      "{{{responseBodyJsonapiResource}}}"
+    ]
   }
 }

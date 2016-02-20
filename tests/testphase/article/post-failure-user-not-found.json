@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "order": 33,
+    "description": "Attempt to create a new article, expecting exception since using non-existing user"
+  },
+  "request": {
+    "url": "article",
+    "method": "POST",
+    "headers": [
+      "{{{headerRequestAccept}}}",
+      "{{{headerRequestContentType}}}"
+    ],
+    "body": {
+      "data": [
+        {
+          "type": "article",
+          "attributes": {
+            "title": "New article from testphase",
+            "body": "Article body"
+          },
+          "relationships": {
+            "creator": {
+              "data": {
+                "id": "2147483648",
+                "type": "user"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "statusCode": 404
+  }
+}

@@ -1,5 +1,6 @@
 <?php
-/**
+declare(strict_types=1);
+/*
  * Copyright 2015-2016 Xenofon Spafaridis
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,35 +29,32 @@ class ArticleController extends \Phramework\Examples\JSONAPI\Controller
 {
     /**
      * Get collection
-     * `/article/{id}/relationships/{relationship}` handler
-     * @param array  $params       Request parameters
+     * `/article/` handler
+     * @param \stdClass $params       Request parameters
      * @param string $method       Request method
      * @param array  $headers      Request headers
      */
     public static function GET($params, $method, $headers)
     {
-        self::handleGET(
+        static::handleGET(
             $params,
             Article::class,
             [],
-            [],
-            true
+            []
         );
     }
 
     /**
      * Get a resource
-     * `/article/{id}/relationships/{relationship}` handler
-     * @param array  $params       Request parameters
+     * `/article/{id}/` handler
+     * @param \stdClass $params       Request parameters
      * @param string $method       Request method
      * @param array  $headers      Request headers
      * @param string $id           Resource id
      */
-    public static function GETById($params, $method, $headers, $id)
+    public static function GETById($params, $method, $headers, string $id)
     {
-        $id = \Phramework\Validate\UnsignedIntegerValidator::parseStatic($id);
-
-        self::handleGETById(
+        static::handleGETById(
             $params,
             $id,
             Article::class,
@@ -66,19 +64,38 @@ class ArticleController extends \Phramework\Examples\JSONAPI\Controller
     }
 
     /**
+     * Post new resource
+     * @param \stdClass $params       Request parameters
+     * @param string $method       Request method
+     * @param array  $headers      Request headers
+     */
+    public static function POST($params, $method, $headers)
+    {
+        static::handlePOST(
+            $params,
+            $method,
+            $headers,
+            Article::class
+        );
+    }
+
+    /**
      * Manage resource's relationships
-     * `/article/{id}/relationships/{relationship}` handler
-     * @param array  $params       Request parameters
+     * `/article/{id}/relationships/{relationship}/` handler
+     * @param \stdClass $params       Request parameters
      * @param string $method       Request method
      * @param array  $headers      Request headers
      * @param string $id           Resource id
      * @param string $relationship Relationship
      */
-    public static function byIdRelationships($params, $method, $headers, $id, $relationship)
-    {
-        $id = \Phramework\Validate\UnsignedIntegerValidator::parseStatic($id);
-
-        parent::handleByIdRelationships(
+    public static function byIdRelationships(
+        $params,
+        $method,
+        $headers,
+        string $id,
+        string $relationship
+    ) {
+        static::handleByIdRelationships(
             $params,
             $method,
             $headers,

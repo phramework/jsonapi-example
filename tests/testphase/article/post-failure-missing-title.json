@@ -1,0 +1,35 @@
+{
+  "meta": {
+    "order": 33,
+    "description": "Attempt to create a new article, expecting exception since body is without a \"title\" attribute"
+  },
+  "request": {
+    "url": "article",
+    "method": "POST",
+    "headers": [
+      "{{{headerRequestAccept}}}",
+      "{{{headerRequestContentType}}}"
+    ],
+    "body": {
+      "data": [
+        {
+          "type": "article",
+          "attributes": {
+            "title": "New article from testphase"
+          },
+          "relationships": {
+            "creator": {
+              "data": {
+                "id": "2147483648",
+                "type": "user"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "statusCode": 422
+  }
+}

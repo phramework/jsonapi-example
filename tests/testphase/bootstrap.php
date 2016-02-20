@@ -1,12 +1,11 @@
 <?php
+declare(strict_types=1);
 
 use Phramework\Testphase\Testphase;
-use Phramework\Testphase\TestParser;
 use Phramework\Testphase\Globals;
 use Phramework\Validate\ObjectValidator;
 use Phramework\Validate\ArrayValidator;
 use Phramework\Validate\StringValidator;
-use Phramework\Validate\URLValidator;
 
 $settings = include __DIR__ . '/../../settings.php';
 
@@ -23,7 +22,7 @@ $responseBodyJsonapiCollection = new ObjectValidator(
             0,
             null,
             new ObjectValidator(
-                [
+                (object) [
                     'id'   => new StringValidator(0, null, '/^[1-9][0-9]*$/'),
                     'type' => new StringValidator(2)
                 ],
@@ -37,14 +36,7 @@ $responseBodyJsonapiCollection = new ObjectValidator(
 $responseBodyJsonapiResource = new ObjectValidator(
     [
         'data' => new  ObjectValidator(
-            [
-                'links' => new ObjectValidator(
-                    [
-                        'self' => new URLValidator(),
-                        'related' => new URLValidator()
-                    ],
-                    ['self']
-                ),
+            (object) [
                 'id'   => new StringValidator(0, null),
                 'type' => new StringValidator(2)
             ],

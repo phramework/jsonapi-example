@@ -1,5 +1,6 @@
 <?php
-/**
+declare(strict_types=1);
+/*
  * Copyright 2015-2016 Xenofon Spafaridis
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -37,11 +38,11 @@ class Tag extends \Phramework\Examples\JSONAPI\Model
     protected static $table     = 'tag';
 
     /**
-     * @param Page|null     $page
-     * @param Filter|null   $filter
-     * @param Sort|null     $sort
-     * @param Fields|null   $fields
-     * @param mixed ...     $additionalParameters
+     * @param Page     $page
+     * @param Filter   $filter
+     * @param Sort     $sort
+     * @param Fields   $fields
+     * @param mixed ...$additionalParameters
      * @return Resource[]
      */
     public static function get(
@@ -51,13 +52,14 @@ class Tag extends \Phramework\Examples\JSONAPI\Model
         Fields $fields = null,
         ...$additionalParameters
     ) {
-        $query = self::handleGet(
-            'SELECT {{fields}}
+        $query = static::handleGet(
+            'SELECT 
+              {{fields}}
             FROM "tag"
             WHERE "status" <> 0
-            {{filter}}
-            {{sort}}
-            {{page}}',
+              {{filter}}
+              {{sort}}
+              {{page}}',
             $page,
             $filter,
             $sort,
@@ -66,7 +68,7 @@ class Tag extends \Phramework\Examples\JSONAPI\Model
 
         $records = Database::executeAndFetchAll($query);
 
-        return self::collection($records, $fields);
+        return static::collection($records, $fields);
     }
 
     /**
@@ -74,16 +76,17 @@ class Tag extends \Phramework\Examples\JSONAPI\Model
      * @return string[]
      */
     public static function getRelationshipArticle(
-        $articleId,
+        string $articleId,
         Fields $fields = null,
         $flags = Resource::PARSE_DEFAULT
-    ) {
+    ) :array {
         $ids = Database::executeAndFetchAllArray(
             'SELECT "article-tag"."tag_id"
             FROM "article-tag"
             JOIN "tag"
              ON "tag"."id" = "article-tag"."tag_id"
-            WHERE "article-tag"."article_id" = ?
+            WHERE
+              "article-tag"."article_id" = ?
               AND "article-tag"."status" <> 0
               AND "tag"."status" <> 0',
             [$articleId]
@@ -93,11 +96,11 @@ class Tag extends \Phramework\Examples\JSONAPI\Model
     }
 
     /**
-     * @return object
+     * @return \stdClass
      */
     public static function getRelationships()
     {
-        return (object)[
+        return (object) [
             'article' => new Relationship(
                 Article::class,
                 Relationship::TYPE_TO_MANY,

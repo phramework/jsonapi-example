@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 
-//This autoload path is for loading current version of phramework
+//This autoload path is for loading current version of phramework and other required packages
 require __DIR__ . '/../vendor/autoload.php';
 
 //define controller namespace, as shortcut
@@ -16,18 +17,27 @@ $APP = function () {
     //Include settings
     $settings = include __DIR__ . '/../settings.php';
 
+    /**
+     * Prepare routing
+     */
     $URIStrategy = new \Phramework\URIStrategy\URITemplate([
         [
-            'article/',
-            NS . 'ArticleController',
-            'GET',
-            Phramework::METHOD_GET
+            'article/', //URI
+            NS . 'ArticleController', //Class
+            'GET', //Class method
+            Phramework::METHOD_GET, //HTTP Method
         ],
         [
             'article/{id}',
             NS . 'ArticleController',
             'GETById',
             Phramework::METHOD_GET
+        ],
+        [
+            'article/',
+            NS . 'ArticleController',
+            'POST',
+            Phramework::METHOD_POST
         ],
         [
             'article/{id}/relationships/{relationship}',
@@ -75,13 +85,15 @@ $APP = function () {
         ],
     ]);
 
-    //Initialize API
+    //Initialize API with settings and routing
     $phramework = new Phramework($settings, $URIStrategy);
 
+    //Set database adapter connection
     \Phramework\Database\Database::setAdapter(
         new \Phramework\Database\SQLite($settings['db'])
     );
 
+    //Set preferred viewer as JSON API viewer
     Phramework::setViewer(
         \Phramework\JSONAPI\Viewers\JSONAPI::class
     );

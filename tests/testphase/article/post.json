@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "order": 32,
+    "description": "Attempt to create a new article successfully"
+  },
+  "request": {
+    "url": "article",
+    "method": "POST",
+    "headers": [
+      "{{{headerRequestAccept}}}",
+      "{{{headerRequestContentType}}}"
+    ],
+    "body": {
+      "data": [
+        {
+          "type": "article",
+          "attributes": {
+            "title": "New article from testphase",
+            "body": "Article body"
+          },
+          "relationships": {
+            "creator": {
+              "data": {
+                "id": "{{userId}}",
+                "type": "user"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "statusCode": 204
+  }
+}

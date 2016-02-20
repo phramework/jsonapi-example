@@ -1,5 +1,6 @@
 <?php
-/**
+declare(strict_types=1);
+/*
  * Copyright 2015-2016 Xenofon Spafaridis
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,33 +29,30 @@ class TagController extends \Phramework\Examples\JSONAPI\Controller
 {
     /**
      * Get collection
-     * @param array  $params       Request parameters
+     * @param \stdClass $params    Request parameters
      * @param string $method       Request method
      * @param array  $headers      Request headers
      */
     public static function GET($params, $method, $headers)
     {
-        self::handleGET(
+        static::handleGET(
             $params,
             Tag::class,
             [],
-            [],
-            true
+            []
         );
     }
 
     /**
      * Get a resource
-     * @param array  $params       Request parameters
+     * @param \stdClass $params    Request parameters
      * @param string $method       Request method
      * @param array  $headers      Request headers
      * @param string $id           Resource id
      */
-    public static function GETById($params, $method, $headers, $id)
+    public static function GETById($params, $method, $headers, string $id)
     {
-        $id = \Phramework\Validate\UnsignedIntegerValidator::parseStatic($id);
-
-        self::handleGETById(
+        static::handleGETById(
             $params,
             $id,
             Tag::class,
@@ -65,17 +63,20 @@ class TagController extends \Phramework\Examples\JSONAPI\Controller
 
     /**
      * Manage resource's relationships
-     * @param array  $params       Request parameters
+     * @param \stdClass $params    Request parameters
      * @param string $method       Request method
      * @param array  $headers      Request headers
      * @param string $id           Resource id
      * @param string $relationship Relationship
      */
-    public static function byIdRelationships($params, $method, $headers, $id, $relationship)
-    {
-        $id = \Phramework\Validate\UnsignedIntegerValidator::parseStatic($id);
-
-        parent::handleByIdRelationships(
+    public static function byIdRelationships(
+        $params,
+        $method,
+        $headers,
+        string $id,
+        string $relationship
+    ) {
+        static::handleByIdRelationships(
             $params,
             $method,
             $headers,

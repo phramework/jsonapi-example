@@ -1,5 +1,6 @@
 <?php
-/**
+declare(strict_types=1);
+/*
  * Copyright 2015-2016 Xenofon Spafaridis
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -36,11 +37,11 @@ class User extends \Phramework\Examples\JSONAPI\Model
     protected static $table     = 'user';
 
     /**
-     * @param Page|null     $page
-     * @param Filter|null   $filter
-     * @param Sort|null     $sort
-     * @param Fields|null   $fields
-     * @param mixed ...     $additionalParameters
+     * @param Page     $page
+     * @param Filter   $filter
+     * @param Sort     $sort
+     * @param Fields   $fields
+     * @param mixed ...$additionalParameters
      * @return Resource[]
      */
     public static function get(
@@ -51,12 +52,13 @@ class User extends \Phramework\Examples\JSONAPI\Model
         ...$additionalParameters
     ) {
         $query = self::handleGet(
-            'SELECT {{fields}}
+            'SELECT
+              {{fields}}
             FROM "user"
             WHERE "status" <> 0
-            {{filter}}
-            {{sort}}
-            {{page}}',
+              {{filter}}
+              {{sort}}
+              {{page}}',
             $page,
             $filter,
             $sort,
@@ -69,11 +71,11 @@ class User extends \Phramework\Examples\JSONAPI\Model
     }
 
     /**
-     * @return object
+     * @return \stdClass
      */
     public static function getRelationships()
     {
-        return (object)[
+        return (object) [
             'article' => new Relationship(
                 Article::class,
                 Relationship::TYPE_TO_MANY,

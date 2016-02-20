@@ -16,14 +16,6 @@ declare(strict_types=1);
  * limitations under the License.
  */
 
-namespace Phramework\Examples\JSONAPI;
+require __DIR__ . '/../../vendor/autoload.php';
 
-/**
- * Base controller
- * Useful for writing common used Controller methods
- * @license https://www.apache.org/licenses/LICENSE-2.0 Apache-2.0
- * @author Xenofon Spafaridis <nohponex@gmail.com>
- */
-class Controller extends \Phramework\JSONAPI\Controller
-{
-}
+$settings = include __DIR__ . '/../../settings.php';
