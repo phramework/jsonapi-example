@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "order": 10
+  },
+  "request": {
+    "url": "article",
+    "method": "GET",
+    "headers": [
+      "{{{headerRequestAccept}}}",
+      "{{{headerRequestContentType}}}"
+    ]
+  },
+  "response": {
+    "statusCode": 200,
+    "headers": {
+      "Content-Type": "{{{headerResponseContentType}}}"
+    },
+    "ruleObjects": ["{{{responseBodyJsonapiCollection}}}"],
+    "export": {
+      "articleId": "data.id"
+    }
+  }
+}

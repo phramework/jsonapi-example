@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "order": 30
+  },
+  "request": {
+    "url": "user",
+    "method": "GET",
+    "headers": [
+      "{{{headerRequestAccept}}}",
+      "{{{headerRequestContentType}}}"
+    ]
+  },
+  "response": {
+    "statusCode": 200,
+    "headers": {
+      "Content-Type": "{{{headerResponseContentType}}}"
+    },
+    "ruleObjects": ["{{{responseBodyJsonapiCollection}}}"],
+    "export": {
+      "userId": "data.id"
+    }
+  }
+}

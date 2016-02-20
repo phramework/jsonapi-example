@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "order": 31
+  },
+  "request": {
+    "url": "user/{{userId}}",
+    "method": "GET",
+    "headers": [
+      "{{{headerRequestAccept}}}",
+      "{{{headerRequestContentType}}}"
+    ]
+  },
+  "response": {
+    "statusCode": 200,
+    "headers": {
+      "Content-Type": "{{{headerResponseContentType}}}"
+    },
+    "ruleObjects": ["{{{responseBodyJsonapiResource}}}"]
+  }
+}
