@@ -1,9 +1,10 @@
 {
   "meta": {
-    "order": 11
+    "description": "Get users using descending order on id",
+    "order": 10
   },
   "request": {
-    "url": "user/{{userId1}}",
+    "url": "user/?sort=-id",
     "method": "GET",
     "headers": [
       "{{{headerRequestAccept}}}",
@@ -16,7 +17,10 @@
       "Content-Type": "{{{headerResponseContentType}}}"
     },
     "ruleObjects": [
-      "{{{responseBodyJsonapiResource}}}"
-    ]
+      "{{{responseBodyJsonapiCollection}}}"
+    ],
+    "export": {
+      "userId2": "data.id"
+    }
   }
 }

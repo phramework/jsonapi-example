@@ -51,7 +51,7 @@ class User extends \Phramework\Examples\JSONAPI\Model
         Fields $fields = null,
         ...$additionalParameters
     ) {
-        $query = self::handleGet(
+        $query = static::handleGet(
             'SELECT
               {{fields}}
             FROM "user"
@@ -67,7 +67,15 @@ class User extends \Phramework\Examples\JSONAPI\Model
 
         $records = Database::executeAndFetchAll($query);
 
-        return self::collection($records, $fields);
+        return static::collection($records, $fields);
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getSortable()
+    {
+        return ['id'];
     }
 
     /**

@@ -1,0 +1,31 @@
+{
+  "meta": {
+    "order": 35,
+    "description": "Attempt to update article`s relationship creator successfully"
+  },
+  "request": {
+    "url": "article/{{articleId}}",
+    "method": "PATCH",
+    "headers": [
+      "{{{headerRequestAccept}}}",
+      "{{{headerRequestContentType}}}"
+    ],
+    "body": {
+      "data": {
+        "type": "article",
+        "id": "{{articleId}}",
+        "relationships": {
+          "creator": {
+            "data": {
+              "type": "user",
+              "id": "{{userId2}}"
+            }
+          }
+        }
+      }
+    }
+  },
+  "response": {
+    "statusCode": 200
+  }
+}

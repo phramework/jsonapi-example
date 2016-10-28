@@ -21,7 +21,7 @@
           "relationships": {
             "creator": {
               "data": {
-                "id": "{{userId}}",
+                "id": "{{userId1}}",
                 "type": "user"
               }
             }

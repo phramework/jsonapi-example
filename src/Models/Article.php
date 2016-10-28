@@ -93,14 +93,14 @@ class Article extends \Phramework\Examples\JSONAPI\Model
                         ->setDefault(1)
                 ],
                 ['title', 'body'], //required attributes,
-                false
+                false //additional properties
             ),
             new ObjectValidator( //relationships
                 (object) [
                     'creator' => new UnsignedIntegerValidator()
                 ],
                 ['creator'], //required relationships,
-                false
+                false //additional properties
             )
         );
     }
@@ -116,15 +116,28 @@ class Article extends \Phramework\Examples\JSONAPI\Model
                 ],
                 [], //required attributes,
                 false
+            ),
+            new ObjectValidator( //relationships
+                (object) [
+                    'creator' => new UnsignedIntegerValidator()
+                ],
+                [], //required relationships
+                false
             )
         );
     }
 
+    /**
+     * @return string[]
+     */
     public static function getMutable()
     {
         return ['title', 'body', 'status'];
     }
 
+    /**
+     * @return string[]
+     */
     public static function getFields()
     {
         return ['title', 'body'];
@@ -175,6 +188,9 @@ class Article extends \Phramework\Examples\JSONAPI\Model
         return $ids;
     }
 
+    /**
+     * @return string[]
+     */
     public static function getSortable()
     {
         return ['id', 'status'];
@@ -189,20 +205,20 @@ class Article extends \Phramework\Examples\JSONAPI\Model
             'creator' => new Relationship(
                 User::class,
                 Relationship::TYPE_TO_ONE,
-                'creator-user_id',
-                null,
+                'creator-user_id', //source data attribute
+                null, //source data callback
                 Relationship::FLAG_DEFAULT | Relationship::FLAG_DATA
             ),
             'tag' => new Relationship(
                 Tag::class,
                 Relationship::TYPE_TO_MANY,
-                null,
+                null, //source data attribute
                 (object) [
                     Phramework::METHOD_GET => [
                         Tag::class,
                         'getRelationshipArticle'
                     ]
-                ],
+                ], //source data callback
                 Relationship::FLAG_DEFAULT | Relationship::FLAG_DATA
             )
         ];

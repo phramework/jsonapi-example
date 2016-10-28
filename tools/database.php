@@ -65,7 +65,8 @@ $adapter->execute(
 
 $users = [
     [1, 'nohponex', 'Xenofon Spafaridis', 1],
-    [2, 'janedoe', 'Jane Doe', 0]
+    [2, 'janedoe', 'Jane Doe', 1],
+    [3, 'stark', 'Jane Stark', 0]
 ];
 
 $articles = [

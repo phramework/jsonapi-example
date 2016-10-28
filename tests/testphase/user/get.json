@@ -19,7 +19,7 @@
       "{{{responseBodyJsonapiCollection}}}"
     ],
     "export": {
-      "userId": "data.id"
+      "userId1": "data.id"
     }
   }
 }

@@ -20,7 +20,7 @@
           "relationships": {
             "creator": {
               "data": {
-                "id": "2147483648",
+                "id": "{{userId1}}",
                 "type": "user"
               }
             }
