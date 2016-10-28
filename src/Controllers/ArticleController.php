@@ -30,11 +30,11 @@ class ArticleController extends \Phramework\Examples\JSONAPI\Controller
     /**
      * Get collection
      * `/article/` handler
-     * @param \stdClass $params       Request parameters
+     * @param \stdClass $params    Request parameters
      * @param string $method       Request method
      * @param array  $headers      Request headers
      */
-    public static function GET($params, $method, $headers)
+    public static function GET(\stdClass $params, string $method, array $headers)
     {
         static::handleGET(
             $params,
@@ -47,12 +47,12 @@ class ArticleController extends \Phramework\Examples\JSONAPI\Controller
     /**
      * Get a resource
      * `/article/{id}/` handler
-     * @param \stdClass $params       Request parameters
+     * @param \stdClass $params    Request parameters
      * @param string $method       Request method
      * @param array  $headers      Request headers
      * @param string $id           Resource id
      */
-    public static function GETById($params, $method, $headers, string $id)
+    public static function GETById(\stdClass $params, string $method, array $headers, string $id)
     {
         static::handleGETById(
             $params,
@@ -65,16 +65,60 @@ class ArticleController extends \Phramework\Examples\JSONAPI\Controller
 
     /**
      * Post new resource
-     * @param \stdClass $params       Request parameters
+     * @param \stdClass $params    Request parameters
      * @param string $method       Request method
      * @param array  $headers      Request headers
      */
-    public static function POST($params, $method, $headers)
+    public static function POST(\stdClass $params, string $method, array $headers)
     {
         static::handlePOST(
             $params,
             $method,
             $headers,
+            Article::class
+        );
+    }
+
+    /**
+     * Update a resource
+     * @param        $params
+     * @param        $method
+     * @param        $headers
+     * @param string $id
+     */
+    public static function PATCH(
+        \stdClass $params,
+        string $method,
+        array $headers,
+        string $id
+    ) {
+        static::handlePATCH(
+            $params,
+            $method,
+            $headers,
+            $id,
+            Article::class
+        );
+    }
+
+    /**
+     * Delete a resource
+     * @param        $params
+     * @param        $method
+     * @param        $headers
+     * @param string $id
+     */
+    public static function DELETE(
+        \stdClass $params,
+        string $method,
+        array $headers,
+        string $id
+    ) {
+        static::handleDELETE(
+            $params,
+            $method,
+            $headers,
+            $id,
             Article::class
         );
     }

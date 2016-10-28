@@ -40,6 +40,18 @@ $APP = function () {
             Phramework::METHOD_POST
         ],
         [
+            'article/{id}',
+            NS . 'ArticleController',
+            'PATCH',
+            Phramework::METHOD_PATCH
+        ],
+        [
+            'article/{id}',
+            NS . 'ArticleController',
+            'DELETE',
+            Phramework::METHOD_DELETE
+        ],
+        [
             'article/{id}/relationships/{relationship}',
             NS . 'ArticleController',
             'byIdRelationships',
