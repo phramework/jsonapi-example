@@ -53,7 +53,7 @@ composer update
 
 To initialize the SQLite database schema and records (required to run only once)
 ```bash
-php ./tools/database.db
+php ./tools/database.php
 ```
 
 To  start local web server at port `8004` execute using php build-in server
