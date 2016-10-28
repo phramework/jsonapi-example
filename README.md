@@ -30,6 +30,21 @@ Available endpoints:
   ]
 }
 ```
+- `PATCH /article/{id}/`
+```json
+{
+  "data": 
+    {
+      "type": "article",
+      "id": "{id}",
+      "attributes": {
+        "title": "Updated title",
+        "body":  "Updated body"
+      }
+    }
+}
+```
+- `DELETE /article/{id}/`
 - `GET /tag/`
 - `GET /tag/{id}/`
 - `GET /tag/{id}/relationships/article/`
@@ -51,12 +66,13 @@ composer update
 
 ## Run
 
-To initialize the SQLite database schema and records (required to run only once)
+To initialize the SQLite database schema and records (required to run only once).
+You can reuse the command to reset the data.
 ```bash
 php ./tools/database.php
 ```
 
-To  start local web server at port `8004` execute using php build-in server
+To start local web server at port `8004` execute using php build-in server
 
 ```bash
 composer run

@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "order": 35,
+    "description": "Attempt to update an article successfully"
+  },
+  "request": {
+    "url": "article/{{articleId}}",
+    "method": "PATCH",
+    "headers": [
+      "{{{headerRequestAccept}}}",
+      "{{{headerRequestContentType}}}"
+    ],
+    "body": {
+      "data": {
+        "type": "article",
+        "id": "{{articleId}}",
+        "attributes": {
+          "title": "Updated article"
+        }
+      }
+    }
+  },
+  "response": {
+    "statusCode": 200
+  }
+}

@@ -1,6 +1,6 @@
 {
   "meta": {
-    "order": 31
+    "order": 34
   },
   "request": {
     "url": "article/{{articleId}}",

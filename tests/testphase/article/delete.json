@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "order": 36,
+    "description": "Attempt to delete an article successfully"
+  },
+  "request": {
+    "url": "article/{{articleId}}",
+    "method": "DELETE",
+    "headers": [
+      "{{{headerRequestAccept}}}",
+      "{{{headerRequestContentType}}}"
+    ]
+  },
+  "response": {
+    "statusCode": 204
+  }
+}

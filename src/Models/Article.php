@@ -85,22 +85,44 @@ class Article extends \Phramework\Examples\JSONAPI\Model
     public static function getValidationModel()
     {
         return new ValidationModel(
-            new ObjectValidator(//attributes
-                (object) [//properties
+            new ObjectValidator( //attributes
+                (object) [ //properties
                     'title'  => new StringValidator(1, 255),
-                    'body'  => new StringValidator(1, 1024),
+                    'body'   => new StringValidator(1, 1024),
                     'status' => (new UnsignedIntegerValidator(0, 1))
                         ->setDefault(1)
                 ],
-                ['title', 'body']//required properties
+                ['title', 'body'], //required attributes,
+                false
             ),
-            new ObjectValidator(//relationships
+            new ObjectValidator( //relationships
                 (object) [
                     'creator' => new UnsignedIntegerValidator()
                 ],
-                ['creator']//required relationships
+                ['creator'], //required relationships,
+                false
             )
         );
+    }
+
+    public static function getPatchValidationModel()
+    {
+        return new ValidationModel(
+            new ObjectValidator( //attributes
+                (object) [ //properties
+                    'title'  => new StringValidator(1, 255),
+                    'body'   => new StringValidator(1, 1024),
+                    'status' => new UnsignedIntegerValidator(0, 1)
+                ],
+                [], //required attributes,
+                false
+            )
+        );
+    }
+
+    public static function getMutable()
+    {
+        return ['title', 'body', 'status'];
     }
 
     public static function getFields()
@@ -151,6 +173,11 @@ class Article extends \Phramework\Examples\JSONAPI\Model
         );
 
         return $ids;
+    }
+
+    public static function getSortable()
+    {
+        return ['id', 'status'];
     }
 
     /**
