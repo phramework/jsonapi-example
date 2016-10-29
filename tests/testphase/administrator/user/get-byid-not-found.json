@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "description": "Attempt to get the user after DELETE is executed",
+    "order": 120
+  },
+  "request": {
+    "url": "administrator/user/{{administratorUserId1}}/",
+    "method": "GET",
+    "headers": [
+      "{{{headerRequestAccept}}}",
+      "{{{headerRequestContentType}}}",
+      "{{{headerRequestAuthorization}}}"
+    ]
+  },
+  "response": {
+    "statusCode": 404,
+    "headers": {
+      "Content-Type": "{{{headerResponseContentType}}}"
+    }
+  }
+}

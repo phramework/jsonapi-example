@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "order": 115
+  },
+  "request": {
+    "url": "administrator/user/?sort=-id",
+    "method": "GET",
+    "headers": [
+      "{{{headerRequestAccept}}}",
+      "{{{headerRequestContentType}}}",
+      "{{{headerRequestAuthorization}}}"
+    ]
+  },
+  "response": {
+    "statusCode": 200,
+    "headers": {
+      "Content-Type": "{{{headerResponseContentType}}}"
+    },
+    "ruleObjects": [
+      "{{{responseBodyJsonapiCollection}}}"
+    ],
+    "export": {
+      "administratorUserId1": "data.id"
+    }
+  }
+}

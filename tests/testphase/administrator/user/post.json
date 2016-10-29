@@ -1,0 +1,32 @@
+{
+  "meta": {
+    "order": 112,
+    "description": "Attempt to create a new user successfully"
+  },
+  "request": {
+    "url": "administrator/user",
+    "method": "POST",
+    "headers": [
+      "{{{headerRequestAccept}}}",
+      "{{{headerRequestContentType}}}",
+      "{{{headerRequestAuthorization}}}"
+    ],
+    "body": {
+      "data": [
+        {
+          "type": "user",
+          "attributes": {
+            "username": "stark{{rand-integer()}}",
+            "email": "nohponex+stark{{rand-integer()}}@gmail.com",
+            "name": "Stark {{rand-integer()}}",
+            "status": 1,
+            "password": "1234"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "statusCode": 204
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "order": 117,
+    "description": "Attempt to update an user successfully"
+  },
+  "request": {
+    "url": "administrator/user/{{administratorUserId1}}/",
+    "method": "PATCH",
+    "headers": [
+      "{{{headerRequestAccept}}}",
+      "{{{headerRequestContentType}}}",
+      "{{{headerRequestAuthorization}}}"
+    ],
+    "body": {
+      "data": {
+        "type": "user",
+        "id": "{{administratorUserId1}}",
+        "attributes": {
+          "name": "Stark {{rand-string()}}"
+        }
+      }
+    }
+  },
+  "response": {
+    "statusCode": 200
+  }
+}

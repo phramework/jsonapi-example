@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+use Phramework\Examples\JSONAPI\Models\Administrator\User;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -27,18 +28,18 @@ $adapter = new \Phramework\Database\SQLite($settings['db']);
 $adapter->execute(
     'CREATE TABLE article(
         `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-        `title` varchar(255),
+        `title` VARCHAR(255),
         `body` TEXT,
-        `creator-user_id` int,
-        `status` int
+        `creator-user_id` INTEGER,
+        `status` INTEGER
     )'
 );
 
 $adapter->execute(
     'CREATE TABLE `tag`(
         `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-        `title` varchar(255),
-        `status` int
+        `title` VARCHAR(255),
+        `status` INTEGER
     )'
 );
 
@@ -46,16 +47,18 @@ $adapter->execute(
     'CREATE TABLE `article-tag`(
         `article_id` INTEGER,
         `tag_id` INTEGER,
-        `status` int
+        `status` INTEGER
     )'
 );
 
 $adapter->execute(
     'CREATE TABLE `user`(
         `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-        `username` varchar(255),
-        `name` varchar(255),
-        `status` int
+        `username` VARCHAR(255) UNIQUE,
+        `name` VARCHAR(255),
+        `email` VARCHAR(255) UNIQUE,
+        `status` INTEGER,
+        `password` VARCHAR(60) NOT NULL
     )'
 );
 
@@ -64,9 +67,30 @@ $adapter->execute(
  */
 
 $users = [
-    [1, 'nohponex', 'Xenofon Spafaridis', 1],
-    [2, 'janedoe', 'Jane Doe', 1],
-    [3, 'stark', 'Jane Stark', 0]
+    [
+        1,
+        'nohponex',
+        'Xenofon Spafaridis',
+        1,
+        'nohponex+nohponex@gmail.com',
+        User::getHash('1234')
+    ],
+    [
+        2,
+        'janedoe',
+        'Jane Doe',
+        1,
+        'nohponex+janedoe@gmail.com',
+        User::getHash('1234')
+    ],
+    [
+        3,
+        'stark',
+        'Jane Stark',
+        0,
+        'nohponex+stark@gmail.com',
+        User::getHash('1234')
+    ]
 ];
 
 $articles = [
@@ -94,8 +118,8 @@ $articlesTags = [
 foreach ($users as $user) {
     $adapter->execute(
         'INSERT INTO `user`
-        (`id`, `username`, `name`, `status`)
-        VALUES (?, ?, ?, ?)',
+        (`id`, `username`, `name`, `status`, `email`, `password`)
+        VALUES (?, ?, ?, ?, ?, ?)',
         $user
     );
 }

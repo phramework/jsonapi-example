@@ -7,7 +7,7 @@ Available endpoints:
 - `GET /article/`
 - `GET /article/{id}/`
 - `GET /article/{id}/relationships/tag/`
-- `GET /article/{id}/relationships/author/`
+- `GET /article/{id}/relationships/creator/`
 - `POST /article/`
 ```json
 {
@@ -50,6 +50,41 @@ Available endpoints:
 - `GET /tag/{id}/relationships/article/`
 - `GET /user/`
 - `GET /user/{id}/`
+
+### /administrator/ API
+
+- `GET /administrator/user/`
+- `GET /administrator/user/{id}/`
+- `POST /administrator/user/`
+```json
+{
+  "data": [
+    {
+      "type": "user",
+      "attributes": {
+        "username": "stark 123",
+        "email": "nohponex+stark123@gmail.com",
+        "name": "Stark 123",
+        "status": 1,
+        "password": "1234"
+      }
+    }
+  ]
+}
+```
+- `PATCH /administrator/user/{id}/`
+```json
+{
+  "data": {
+    "type": "user",
+    "id": "{id}",
+    "attributes": {
+      "name": "New name"
+    }
+  }
+}
+```
+- `DELETE /administrator/user/{id}/`
 
 ## Install
 Requirements:

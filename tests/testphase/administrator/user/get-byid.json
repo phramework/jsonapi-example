@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "order": 116
+  },
+  "request": {
+    "url": "administrator/user/{{administratorUserId1}}/",
+    "method": "GET",
+    "headers": [
+      "{{{headerRequestAccept}}}",
+      "{{{headerRequestContentType}}}",
+      "{{{headerRequestAuthorization}}}"
+    ]
+  },
+  "response": {
+    "statusCode": 200,
+    "headers": {
+      "Content-Type": "{{{headerResponseContentType}}}"
+    },
+    "ruleObjects": [
+      "{{{responseBodyJsonapiResource}}}"
+    ]
+  }
+}

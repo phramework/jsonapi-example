@@ -62,6 +62,11 @@ Globals::set(
 );
 
 Globals::set(
+    'headerRequestAuthorization',
+    'Authorization: Basic ' . base64_encode('nohponex+nohponex@gmail.com:1234')
+);
+
+Globals::set(
     'responseBodyJsonapiResource',
     $responseBodyJsonapiResource->toJSON()
 );
