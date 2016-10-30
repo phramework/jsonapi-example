@@ -18,12 +18,37 @@ declare(strict_types=1);
 
 namespace Phramework\Examples\JSONAPI;
 
+use Phramework\Validate\StringValidator;
+
 /**
  * Base Model
  * Useful for writing common used Model methods
  * @license https://www.apache.org/licenses/LICENSE-2.0 Apache-2.0
  * @author Xenofon Spafaridis <nohponex@gmail.com>
  */
-class Model extends \Phramework\JSONAPI\Model
+abstract class Model extends \Phramework\JSONAPI\Model
 {
+    /**
+     * @return StringValidator
+     */
+    public static function getIdValidator() : StringValidator
+    {
+        return new StringValidator(
+            1,
+            128,
+            '/^\d+$/'
+        );
+    }
+
+    /**
+     * Prepare records
+     * @param  array $record Database record row
+     * @return array|null on failure
+     */
+    protected static function prepareRecord(array &$record)
+    {
+        if (!$record) {
+            return null;
+        }
+    }
 }

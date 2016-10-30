@@ -61,7 +61,7 @@ class Article extends \Phramework\Examples\JSONAPI\Model
               {{fields}},
               "creator-user_id"
             FROM "article"
-            WHERE "status" <> 0
+            WHERE "status" <> ?
               {{filter}}
               {{sort}}
               {{page}}',
@@ -72,7 +72,17 @@ class Article extends \Phramework\Examples\JSONAPI\Model
             true
         );
 
-        $records = Database::executeAndFetchAll($query);
+        $records = Database::executeAndFetchAll(
+            $query,
+            [
+                '0'
+            ]
+        );
+
+        array_walk(
+            $records,
+            [static::class, 'prepareRecord']
+        );
 
         return static::collection($records, $fields);
     }
@@ -97,7 +107,7 @@ class Article extends \Phramework\Examples\JSONAPI\Model
             ),
             new ObjectValidator( //relationships
                 (object) [
-                    'creator' => new UnsignedIntegerValidator()
+                    'creator' => User::getIdValidator()
                 ],
                 ['creator'], //required relationships,
                 false //additional properties
@@ -119,7 +129,7 @@ class Article extends \Phramework\Examples\JSONAPI\Model
             ),
             new ObjectValidator( //relationships
                 (object) [
-                    'creator' => new UnsignedIntegerValidator()
+                    'creator' => User::getIdValidator()
                 ],
                 [], //required relationships
                 false
@@ -144,11 +154,12 @@ class Article extends \Phramework\Examples\JSONAPI\Model
     }
 
     /**
+     * Get all articles with given tag id
      * @param string $tagId
      * @return string[]
      */
     public static function getRelationshipTag(
-        $tagId,
+        string $tagId,
         Fields $fields = null,
         $flags = Resource::PARSE_DEFAULT
     ) {
@@ -168,6 +179,7 @@ class Article extends \Phramework\Examples\JSONAPI\Model
     }
 
     /**
+     * Get all articles with given creator id
      * @param string $userId
      * @return string[]
      */
@@ -213,12 +225,12 @@ class Article extends \Phramework\Examples\JSONAPI\Model
                 Tag::class,
                 Relationship::TYPE_TO_MANY,
                 null, //source data attribute
-                (object) [
+                (object) [ //source data callback
                     Phramework::METHOD_GET => [
                         Tag::class,
                         'getRelationshipArticle'
                     ]
-                ], //source data callback
+                ],
                 Relationship::FLAG_DEFAULT | Relationship::FLAG_DATA
             )
         ];

@@ -59,17 +59,22 @@ class User extends \Phramework\Examples\JSONAPI\Models\User
             $filter,
             $sort,
             $fields,
-            false
+            false //query has where
         );
 
         $records = Database::executeAndFetchAll($query);
+
+        array_walk(
+            $records,
+            [static::class, 'prepareRecord']
+        );
 
         return static::collection($records, $fields);
     }
 
     /**
      * Override post to hash password if it set
-     * @param array $attributes
+     * @param \stdClass $attributes
      * @param int   $return
      * @return mixed
      */
@@ -91,7 +96,7 @@ class User extends \Phramework\Examples\JSONAPI\Models\User
     /**
      * Override post to hash password if it set
      * @param mixed  $id
-     * @param object $attributes
+     * @param \stdClass $attributes
      * @return int
      */
     public static function patch($id, $attributes)
@@ -180,5 +185,14 @@ class User extends \Phramework\Examples\JSONAPI\Models\User
     public static function getHash($password)
     {
         return password_hash($password, PASSWORD_BCRYPT);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function prepareRecord(array &$record)
+    {
+        //Although not needed, we make sure password column is removed from record
+        unset($record['password']);
     }
 }

@@ -55,7 +55,7 @@ class User extends \Phramework\Examples\JSONAPI\Model
             'SELECT
               {{fields}}
             FROM "user"
-            WHERE "status" <> 0
+            WHERE "status" <> ?
               {{filter}}
               {{sort}}
               {{page}}',
@@ -65,7 +65,17 @@ class User extends \Phramework\Examples\JSONAPI\Model
             $fields
         );
 
-        $records = Database::executeAndFetchAll($query);
+        $records = Database::executeAndFetchAll(
+            $query,
+            [ //parameters
+                '0'
+            ]
+        );
+
+        array_walk(
+            $records,
+            [static::class, 'prepareRecord']
+        );
 
         return static::collection($records, $fields);
     }

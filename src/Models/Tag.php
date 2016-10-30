@@ -56,7 +56,7 @@ class Tag extends \Phramework\Examples\JSONAPI\Model
             'SELECT 
               {{fields}}
             FROM "tag"
-            WHERE "status" <> 0
+            WHERE "status" <> ?
               {{filter}}
               {{sort}}
               {{page}}',
@@ -66,7 +66,17 @@ class Tag extends \Phramework\Examples\JSONAPI\Model
             $fields
         );
 
-        $records = Database::executeAndFetchAll($query);
+        $records = Database::executeAndFetchAll(
+            $query,
+            [
+                '0'
+            ]
+        );
+
+        array_walk(
+            $records,
+            [static::class, 'prepareRecord']
+        );
 
         return static::collection($records, $fields);
     }
