@@ -89,7 +89,7 @@ class Article extends \Phramework\Examples\JSONAPI\Model
 
     /**
      * Defines model's validator for POST requests
-     * also may be used for PATCH requests and to validate filter directive values
+     * also it may be used to validate filter directive values if any
      * @return ValidationModel
      */
     public static function getValidationModel()
@@ -135,14 +135,6 @@ class Article extends \Phramework\Examples\JSONAPI\Model
                 false
             )
         );
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getMutable()
-    {
-        return ['title', 'body', 'status'];
     }
 
     /**
