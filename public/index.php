@@ -95,6 +95,36 @@ $APP = function () {
             'byIdRelationships',
             Phramework::METHOD_ANY
         ],
+        [
+            'review/', //URI
+            NS . 'ReviewController', //Class
+            'GET', //Class method
+            Phramework::METHOD_GET, //HTTP Method
+        ],
+        [
+            'review/{id}',
+            NS . 'ReviewController',
+            'GETById',
+            Phramework::METHOD_GET
+        ],
+        [
+            'review/',
+            NS . 'ReviewController',
+            'POST',
+            Phramework::METHOD_POST
+        ],
+        [
+            'review/{id}',
+            NS . 'ReviewController',
+            'PATCH',
+            Phramework::METHOD_PATCH
+        ],
+        [
+            'review/{id}/relationships/{relationship}',
+            NS . 'ReviewController',
+            'byIdRelationships',
+            Phramework::METHOD_ANY
+        ],
     ]);
 
     //Initialize API with settings and routing

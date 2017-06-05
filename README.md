@@ -135,3 +135,15 @@ Lint code using [PSR-2](http://www.php-fig.org/psr/psr-2/) coding style
 ```bash
 composer lint
 ```
+
+## Debugging
+
+### Setting up xDebug with PhpStorm
+
+Increase your composer's timeout limit by adding these lines to your 
+`~/.bashrc` file
+
+```
+export COMPOSER_PROCESS_TIMEOUT=1200
+export COMPOSER_DISABLE_XDEBUG_WARN=1
+```
