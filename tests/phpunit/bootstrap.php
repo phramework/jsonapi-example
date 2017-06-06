@@ -19,3 +19,12 @@ declare(strict_types=1);
 require __DIR__ . '/../../vendor/autoload.php';
 
 $settings = include __DIR__ . '/../../settings.php';
+
+$uriStrategy = new \Phramework\URIStrategy\URITemplate([]);
+
+//Initialize Phramework
+$phramework = new \Phramework\Phramework($settings, $uriStrategy);
+
+\Phramework\Database\Database::setAdapter(
+    new \Phramework\Database\SQLite($settings['db'])
+);
