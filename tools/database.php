@@ -31,7 +31,9 @@ $adapter->execute(
         `title` VARCHAR(255),
         `body` TEXT,
         `creator-user_id` INTEGER,
-        `status` INTEGER
+        `status` INTEGER,
+        `created` INTEGER NOT NULL,
+        `updated` INTEGER
     )'
 );
 

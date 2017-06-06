@@ -142,7 +142,7 @@ class Article extends \Phramework\Examples\JSONAPI\Model
      */
     public static function getFields()
     {
-        return ['title', 'body'];
+        return ['title', 'body', 'created', 'updated'];
     }
 
     /**
@@ -197,7 +197,54 @@ class Article extends \Phramework\Examples\JSONAPI\Model
      */
     public static function getSortable()
     {
-        return ['id', 'status'];
+        return ['id', 'status', 'created', 'updated'];
+    }
+
+    /**
+     * Override post behaviour,
+     * to set created timestamp if not set
+     * @param \stdClass|array $attributes
+     * @return string
+     */
+    public static function post(
+        $attributes,
+        $return = \Phramework\Database\Operations\Create::RETURN_ID
+    ) {
+        /*
+         * Work with object
+         */
+        if (is_array($attributes)) {
+            $attributes = (object) $attributes;
+        }
+
+        if (isset($attributes->created)) {
+            $attributes->created = time();
+        }
+
+        return parent::post($attributes, $return);
+    }
+
+    /**
+     * Override patch behaviour,
+     * to set updated timestamp if not set
+     * @param mixed  $id
+     * @param \stdClass|array $attributes
+     * @return int
+     */
+    public static function patch($id, $attributes)
+    {
+        /*
+         * Work with object
+         */
+        if (is_array($attributes)) {
+            $attributes = (object) $attributes;
+        }
+
+        if (isset($attributes->updated)) {
+            $attributes->updated = time();
+        }
+
+        return parent::patch($id, $attributes);
     }
 
     /**
