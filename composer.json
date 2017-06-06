@@ -23,7 +23,7 @@
   "require-dev": {
     "squizlabs/php_codesniffer": "*",
     "phramework/testphase": "^1.2",
-    "phpunit/phpunit": "5.*",
+    "phpunit/phpunit": "^6.1",
     "phpdocumentor/phpdocumentor": "2.*"
   },
   "autoload": {
@@ -44,7 +44,7 @@
     ],
     "test": [
       "composer check-syntax",
-      "phpunit",
+      "./vendor/bin/phpunit",
       "composer testphase"
     ],
     "check-syntax": [
