@@ -93,23 +93,21 @@ class ArticleController extends \Phramework\Examples\JSONAPI\Controller
                     $attributes->created = $now;
                 }
             ],
-            [
-                /**
-                 * Override view, by setting a view callback
-                 * to response with 204 and a Location header
-                 */
-                function (string $ids) {
-                    //Prepare response with 201 Created status code and Location header
-                    \Phramework\Models\Response::created(
-                        Article::getSelfLink($ids[0])
-                    );
+            /**
+             * Override view, by setting a view callback
+             * to response with 204 and a Location header
+             */
+            function (array $ids) {
+                //Prepare response with 201 Created status code and Location header
+                \Phramework\Models\Response::created(
+                    Article::getSelfLink($ids[0])
+                );
 
-                    \Phramework\JSONAPI\Viewers\JSONAPI::header();
+                \Phramework\JSONAPI\Viewers\JSONAPI::header();
 
-                    //Will overwrite 201 with 204 status code
-                    \Phramework\Models\Response::noContent();
-                }
-            ]
+                //Will overwrite 201 with 204 status code
+                \Phramework\Models\Response::noContent();
+            }
         );
     }
 
@@ -146,15 +144,13 @@ class ArticleController extends \Phramework\Examples\JSONAPI\Controller
                     $attributes->updated = $now;
                 }
             ],
-            [
-                /**
-                 * Override view, by setting a view callback
-                 * to response with 204
-                 */
-                function (string $id) {
-                    \Phramework\Models\Response::noContent();
-                }
-            ]
+            /**
+             * Override view, by setting a view callback
+             * to response with 204
+             */
+            function (string $id) {
+                \Phramework\Models\Response::noContent();
+            }
         );
     }
 

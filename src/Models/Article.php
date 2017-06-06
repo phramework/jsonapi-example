@@ -217,7 +217,7 @@ class Article extends \Phramework\Examples\JSONAPI\Model
             $attributes = (object) $attributes;
         }
 
-        if (isset($attributes->created)) {
+        if (!isset($attributes->created)) {
             $attributes->created = time();
         }
 
@@ -240,7 +240,7 @@ class Article extends \Phramework\Examples\JSONAPI\Model
             $attributes = (object) $attributes;
         }
 
-        if (isset($attributes->updated)) {
+        if (!isset($attributes->updated)) {
             $attributes->updated = time();
         }
 
