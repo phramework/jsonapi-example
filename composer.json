@@ -24,7 +24,8 @@
     "squizlabs/php_codesniffer": "*",
     "phramework/testphase": "^1.2",
     "phpunit/phpunit": "5.*",
-    "phpdocumentor/phpdocumentor": "2.*"
+    "phpdocumentor/phpdocumentor": "2.*",
+    "league/commonmark": "^0.15.4"
   },
   "autoload": {
     "psr-4": {
@@ -54,6 +55,7 @@
       "find ./ -maxdepth 1 -name '*.php' -print0 | xargs -0 -L 1 php -l"
     ],
     "testphase": "php ./vendor/bin/testphase -d ./tests/testphase -b ./tests/testphase/bootstrap.php -i -v",
+    "testphase-report": "./vendor/bin/testphase-report --dir ./tests/testphase --out ./build/testphase",
     "doc": [
       "phpdoc -d ./src -t ./doc/code"
     ]
