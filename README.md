@@ -99,6 +99,8 @@ To download dependencies
 composer update
 ```
 
+It is also recommended to install and configure [Xdebug](https://xdebug.org/)
+
 ## Run
 
 To initialize the SQLite database schema and records (required to run only once).
@@ -108,12 +110,6 @@ php ./tools/database.php
 ```
 
 To start local web server at port `8004` execute using php build-in server
-
-```bash
-composer run
-```
-
-or 
 
 ```bash
 php -S localhost:8004 -t ./public/
