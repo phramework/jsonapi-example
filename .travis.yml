@@ -4,6 +4,13 @@ cache:
     - $HOME/.composer/cache
 php:
   - 7.0
+  - 7.1
+  - nightly
+
+matrix:  
+  allow_failures:
+    - php: nightly
+
 install:
   - composer self-update
   - composer install --no-interaction --dev --prefer-dist
@@ -16,4 +23,3 @@ script:
   - composer check-syntax
   - phpunit
   - composer testphase
-after_script:

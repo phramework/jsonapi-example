@@ -17,7 +17,8 @@
     "php": ">=7",
     "ext-pdo_sqlite": "*",
     "phramework/phramework": "^1.3",
-    "phramework/jsonapi": "1.0.0-RC16",
+    "phramework/jsonapi": "1.0.0-RC19",
+    "ext-pdo_sqlite": "*",
     "phramework/basic-authentication": "^0.0.0"
   },
   "require-dev": {
