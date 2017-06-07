@@ -4,6 +4,8 @@ cache:
     - $HOME/.composer/cache
 php:
   - 7.0
+  - 7.1
+  - nightly
 install:
   - composer self-update
   - composer install --no-interaction --dev --prefer-dist
