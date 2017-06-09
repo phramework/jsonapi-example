@@ -16,12 +16,11 @@
         "type": "user_data",
         "attributes": {
           "value": {"type":"object","properties":{"platform":{"type":"enum","enum":["www","ios","android"],"title":"Your platform","description":"Tell us your platform","meta":{"display":"radio","enum-titles":{"www":"Web browser","android":"Android"}}}}}
-
         },
         "relationships": {
           "template": {
             "data": {
-              "id": "1",
+              "id": "{{templateId1}}",
               "type": "user_data_template"
             }
           }

@@ -18,13 +18,15 @@ declare(strict_types=1);
 
 namespace Phramework\Examples\JSONAPI\Controllers;
 
+use Phramework\Examples\JSONAPI\Models\UserDataTemplate;
 use Phramework\Examples\JSONAPI\Request;
 use Phramework\Examples\JSONAPI\Models\UserData;
 use Phramework\Phramework;
+use Phramework\Validate\ObjectValidator;
 
 /**
  * @license https://www.apache.org/licenses/LICENSE-2.0 Apache-2.0
- * @author Xenofon Spafaridis <nohponex@gmail.com>
+ * @author Kostas Nikolopoulos <kosnikolopoulos@gmail.com>
  */
 class UserDataController extends \Phramework\Examples\JSONAPI\Controller
 {
@@ -34,7 +36,7 @@ class UserDataController extends \Phramework\Examples\JSONAPI\Controller
      * @param string $method       Request method
      * @param array  $headers      Request headers
      */
-    public static function GET($params, $method, $headers)
+    public static function GET( \stdClass $params, string $method, array $headers)
     {
         $user = Request::checkPermission();
 
@@ -53,7 +55,7 @@ class UserDataController extends \Phramework\Examples\JSONAPI\Controller
      * @param array  $headers      Request headers
      * @param string $id           Resource id
      */
-    public static function GETById($params, $method, $headers, string $id)
+    public static function GETById(\stdClass $params, string $method, array $headers, string $id)
     {
         $user = Request::checkPermission();
 
@@ -93,7 +95,12 @@ class UserDataController extends \Phramework\Examples\JSONAPI\Controller
                     \stdClass $attributes,
                     \stdClass $parsedRelationshipAttributes
                 ) use ($user) {
-                    $attributes->user_id = $user->id;
+                    $attributes->user_id = $user->id; // inject user id from authorization
+                    $template = UserDataTemplate::getById($requestRelationships->template->data->id); // get template in order to create validator
+                    $validator = new ObjectValidator();
+                    $templateJson = json_decode($template->attributes->value);
+                    $validator = $validator->createFromObject($templateJson); // create validator
+                    $attributes->value = $validator->parse($attributes->value); // validate data
                 }
             ],
             /**
@@ -111,22 +118,20 @@ class UserDataController extends \Phramework\Examples\JSONAPI\Controller
             }
         );
     }
-
-
-
+    
     /**
      * Manage resource's relationships
      * `/article/{id}/relationships/{relationship}/` handler
-     * @param \stdClass $params       Request parameters
+     * @param \stdClass $params    Request parameters
      * @param string $method       Request method
      * @param array  $headers      Request headers
      * @param string $id           Resource id
      * @param string $relationship Relationship
      */
     public static function byIdRelationships(
-        $params,
-        $method,
-        $headers,
+        \stdClass $params,
+        string $method,
+        array $headers,
         string $id,
         string $relationship
     ) {
@@ -142,10 +147,4 @@ class UserDataController extends \Phramework\Examples\JSONAPI\Controller
             []
         );
     }
-
-
-
-
-
-
 }

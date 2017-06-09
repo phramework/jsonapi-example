@@ -62,6 +62,22 @@ $adapter->execute(
     )'
 );
 
+$adapter->execute(
+    'CREATE TABLE `user_data_template`(
+        `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        `value` TEXT
+    )'
+);
+
+$adapter->execute(
+    'CREATE TABLE `user_data`(
+        `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        `user_id` INTEGER,
+        `user_data_template_id` INTEGER,
+        `value` TEXT
+    )'
+);
+
 /*
  * Define lists of records to be inserted
  */
@@ -110,7 +126,37 @@ $articlesTags = [
     [1, 2, 1],
     [2, 1, 1]
 ];
+$user_data_templates = [
+    [
+        1,
+        '{"type":"object","properties":{"platform":{"type":"enum","enum":["www","ios","android"],"title":"Your platform","description":"Tell us your platform","meta":{"display":"radio","enum-titles":{"www":"Web browser","android":"Android"}}}}}',
+    ],
+    [
+        2,
+        '{"type":"object","properties":{"platform":{"type":"enum","enum":["www","ios","android"],"title":"Your platform","description":"Tell us your platform","meta":{"display":"radio","enum-titles":{"www":"Web browser","android":"Android"}}}}}',
+    ],
+];
 
+$user_data_entries = [
+    [
+        1,
+        1,
+        1,
+        '{"platform":"www"}',
+    ],
+    [
+        2,
+        1,
+        2,
+        '{"platform":"ios"}',
+    ],
+    [
+        3,
+        2,
+        2,
+        '{"platform":"ios"}',
+    ],
+];
 
 /*
  * Insert user records
@@ -157,6 +203,30 @@ foreach ($articlesTags as $articleTag) {
         (`article_id`, `tag_id`, `status`)
         VALUES (?, ?, ?)',
         $articleTag
+    );
+}
+
+/*
+ * Insert user_data_template records
+ */
+foreach ($user_data_templates as $user_data_template) {
+    $adapter->execute(
+        'INSERT INTO `user_data_template`
+        (`id`, `value`)
+        VALUES (?, ?)',
+        $user_data_template
+    );
+}
+
+/*
+ * Insert user_data_template records
+ */
+foreach ($user_data_entries as $user_data) {
+    $adapter->execute(
+        'INSERT INTO `user_data`
+        (`id`, `user_id`, `user_data_template_id`, `value`)
+        VALUES (?, ?, ?, ?)',
+        $user_data
     );
 }
 

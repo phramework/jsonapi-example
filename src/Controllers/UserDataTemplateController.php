@@ -33,7 +33,7 @@ class UserDataTemplateController extends \Phramework\Examples\JSONAPI\Controller
      * @param string $method       Request method
      * @param array  $headers      Request headers
      */
-    public static function GET($params, $method, $headers)
+    public static function GET( \stdClass $params, string $method, array $headers)
     {
         static::handleGET(
             $params,
@@ -50,7 +50,7 @@ class UserDataTemplateController extends \Phramework\Examples\JSONAPI\Controller
      * @param array  $headers      Request headers
      * @param string $id           Resource id
      */
-    public static function GETById($params, $method, $headers, string $id)
+    public static function GETById( \stdClass $params, string $method, array $headers, string $id)
     {
         static::handleGETById(
             $params,
