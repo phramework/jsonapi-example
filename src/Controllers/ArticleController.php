@@ -71,11 +71,43 @@ class ArticleController extends \Phramework\Examples\JSONAPI\Controller
      */
     public static function POST(\stdClass $params, string $method, array $headers)
     {
+        $now = time();
+
         static::handlePOST(
             $params,
             $method,
             $headers,
-            Article::class
+            Article::class,
+            [],
+            [],
+            [
+                /**
+                 * A validation callback to inject created timestamp
+                 */
+                function (
+                    \stdClass $requestAttributes,
+                    \stdClass $requestRelationships,
+                    \stdClass $attributes,
+                    \stdClass $parsedRelationshipAttributes
+                ) use ($now) {
+                    $attributes->created = $now;
+                }
+            ],
+            /**
+             * Override view, by setting a view callback
+             * to response with 204 and a Location header
+             */
+            function (array $ids) {
+                //Prepare response with 201 Created status code and Location header
+                \Phramework\Models\Response::created(
+                    Article::getSelfLink($ids[0])
+                );
+
+                \Phramework\JSONAPI\Viewers\JSONAPI::header();
+
+                //Will overwrite 201 with 204 status code
+                \Phramework\Models\Response::noContent();
+            }
         );
     }
 
@@ -92,12 +124,33 @@ class ArticleController extends \Phramework\Examples\JSONAPI\Controller
         array $headers,
         string $id
     ) {
+        $now = time();
+
         static::handlePATCH(
             $params,
             $method,
             $headers,
             $id,
-            Article::class
+            Article::class,
+            [],
+            [
+                function (
+                    string $id,
+                    \stdClass $requestAttributes,
+                    \stdClass $requestRelationships,
+                    \stdClass $attributes,
+                    \stdClass $parsedRelationshipAttributes
+                ) use ($now) {
+                    $attributes->updated = $now;
+                }
+            ],
+            /**
+             * Override view, by setting a view callback
+             * to response with 204
+             */
+            function (string $id) {
+                \Phramework\Models\Response::noContent();
+            }
         );
     }
 

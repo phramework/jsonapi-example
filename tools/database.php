@@ -31,7 +31,9 @@ $adapter->execute(
         `title` VARCHAR(255),
         `body` TEXT,
         `creator-user_id` INTEGER,
-        `status` INTEGER
+        `status` INTEGER,
+        `created` INTEGER NOT NULL,
+        `updated` INTEGER
     )'
 );
 
@@ -94,8 +96,8 @@ $users = [
 ];
 
 $articles = [
-    [1, 'Hello World', 'HELLO WORLD', 1, 1],
-    [2, 'About us', 'We are...', 1, 1]
+    [1, 'Hello World', 'HELLO WORLD', 1, 1, time()],
+    [2, 'About us', 'We are...', 1, 1, time()]
 ];
 
 $tags = [
@@ -130,8 +132,8 @@ foreach ($users as $user) {
 foreach ($articles as $article) {
     $adapter->execute(
         'INSERT INTO `article`
-        (`id`, `title`, `body`, `creator-user_id`, `status`)
-        VALUES (?, ?, ?, ?, ?)',
+        (`id`, `title`, `body`, `creator-user_id`, `status`, `created`)
+        VALUES (?, ?, ?, ?, ?, ?)',
         $article
     );
 }
