@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "order": 121
+  },
+  "request": {
+    "url": "user_data/{{userDataId1}}",
+    "method": "GET",
+    "headers": [
+      "{{{headerRequestAccept}}}",
+      "{{{headerRequestContentType}}}",
+      "{{{headerRequestAuthorization}}}"
+    ]
+  },
+  "response": {
+    "statusCode": 200,
+    "headers": {
+      "Content-Type": "{{{headerResponseContentType}}}"
+    },
+    "ruleObjects": [
+      "{{{responseBodyJsonapiResource}}}"
+    ]
+  }
+}
