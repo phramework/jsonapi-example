@@ -95,6 +95,36 @@ $APP = function () {
             'byIdRelationships',
             Phramework::METHOD_ANY
         ],
+        [
+            'user_data_template/', //URI
+            NS . 'UserDataTemplateController', //Class
+            'GET', //Class method
+            Phramework::METHOD_GET, //HTTP Method
+        ],
+        [
+            'user_data_template/{id}', //URI
+            NS . 'UserDataTemplateController', //Class
+            'GETById', //Class method
+            Phramework::METHOD_GET, //HTTP Method
+        ],
+        [
+            'user_data/', //URI
+            NS . 'UserDataController', //Class
+            'GET', //Class method
+            Phramework::METHOD_GET, //HTTP Method
+        ],
+        [
+            'user_data/{id}', //URI
+            NS . 'UserDataController', //Class
+            'GETById', //Class method
+            Phramework::METHOD_GET, //HTTP Method
+        ],
+        [
+            'user_data/', //URI
+            NS . 'UserDataController', //Class
+            'POST', //Class method
+            Phramework::METHOD_POST, //HTTP Method
+        ],
     ]);
 
     //Initialize API with settings and routing
@@ -108,6 +138,22 @@ $APP = function () {
     //Set preferred viewer as JSON API viewer
     Phramework::setViewer(
         \Phramework\JSONAPI\Viewers\JSONAPI::class
+    );
+    //Set authentication class
+    \Phramework\Authentication\Manager::register(
+        \Phramework\Authentication\BasicAuthentication\BasicAuthentication::class
+    );
+
+    //Set method to fetch user object, including password attribute
+    \Phramework\Authentication\Manager::setUserGetByEmailMethod(
+        [
+            \Phramework\Examples\JSONAPI\Models\Administrator\Authentication::class,
+            'getByEmailWithPassword'
+        ]
+    );
+
+    \Phramework\Authentication\Manager::setAttributes(
+        ['email']
     );
 
     unset($settings);

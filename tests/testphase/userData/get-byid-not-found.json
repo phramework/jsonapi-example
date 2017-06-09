@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "order": 122
+  },
+  "request": {
+    "url": "user_data/333",
+    "method": "GET",
+    "headers": [
+      "{{{headerRequestAccept}}}",
+      "{{{headerRequestContentType}}}",
+      "{{{headerRequestAuthorization}}}"
+    ]
+  },
+  "response": {
+    "statusCode": 404,
+    "headers": {
+      "Content-Type": "{{{headerResponseContentType}}}"
+    },
+    "ruleObjects": [
+    ]
+  }
+}

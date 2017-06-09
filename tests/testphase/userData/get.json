@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "order": 120
+  },
+  "request": {
+    "url": "user_data/",
+    "method": "GET",
+    "headers": [
+      "{{{headerRequestAccept}}}",
+      "{{{headerRequestContentType}}}",
+      "{{{headerRequestAuthorization}}}"
+    ]
+  },
+  "response": {
+    "statusCode": 200,
+    "headers": {
+      "Content-Type": "{{{headerResponseContentType}}}"
+    },
+    "ruleObjects": [
+      "{{{responseBodyJsonapiCollection}}}"
+    ],
+    "export": {
+      "userDataId1": "data.id"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "order": 124,
+    "description": "Attempt to create a new user data, expecting exception since body is without a \"user data template \" relationship"
+  },
+  "request": {
+    "url": "user_data",
+    "method": "POST",
+    "headers": [
+      "{{{headerRequestAccept}}}",
+      "{{{headerRequestContentType}}}",
+      "{{{headerRequestAuthorization}}}"
+    ],
+    "body": {
+      "data": {
+        "type": "user_data",
+        "attributes": {
+          "value": {"type":"object","properties":{"platform":{"type":"enum","enum":["www","ios","android"],"title":"Your platform","description":"Tell us your platform","meta":{"display":"radio","enum-titles":{"www":"Web browser","android":"Android"}}}}}
+        }
+      }
+    }
+  },
+  "response": {
+    "statusCode": 422
+  }
+}
