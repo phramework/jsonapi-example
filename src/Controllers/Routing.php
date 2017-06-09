@@ -52,6 +52,12 @@ class Routing implements IRouting
                 'byIdRelationships',
                 Phramework::METHOD_ANY
             ],
+            [
+                'article/{id}/{relationship}',
+                ArticleController::class,
+                'byIdRelationshipsRelated',
+                Phramework::METHOD_ANY
+            ],
 
             [
                 'tag/',
@@ -71,6 +77,12 @@ class Routing implements IRouting
                 'byIdRelationships',
                 Phramework::METHOD_ANY
             ],
+            [
+                'tag/{id}/{relationship}',
+                TagController::class,
+                'byIdRelationshipsRelated',
+                Phramework::METHOD_ANY
+            ],
 
             [
                 'user/',
@@ -88,6 +100,12 @@ class Routing implements IRouting
                 'user/{id}/relationships/{relationship}',
                 UserController::class,
                 'byIdRelationships',
+                Phramework::METHOD_ANY
+            ],
+            [
+                'user/{id}/{relationship}',
+                UserController::class,
+                'byIdRelationshipsRelated',
                 Phramework::METHOD_ANY
             ],
         ];

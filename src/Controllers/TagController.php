@@ -33,8 +33,11 @@ class TagController extends \Phramework\Examples\JSONAPI\Controller
      * @param string $method       Request method
      * @param array  $headers      Request headers
      */
-    public static function GET($params, $method, $headers)
-    {
+    public static function GET(
+        \stdClass $params,
+        string $method,
+        array $headers
+    ) {
         static::handleGET(
             $params,
             Tag::class,
@@ -50,8 +53,12 @@ class TagController extends \Phramework\Examples\JSONAPI\Controller
      * @param array  $headers      Request headers
      * @param string $id           Resource id
      */
-    public static function GETById($params, $method, $headers, string $id)
-    {
+    public static function GETById(
+        \stdClass $params,
+        string $method,
+        array $headers,
+        string $id
+    ) {
         static::handleGETById(
             $params,
             $id,
@@ -70,9 +77,9 @@ class TagController extends \Phramework\Examples\JSONAPI\Controller
      * @param string $relationship Relationship
      */
     public static function byIdRelationships(
-        $params,
-        $method,
-        $headers,
+        \stdClass $params,
+        string $method,
+        array $headers,
         string $id,
         string $relationship
     ) {
@@ -85,6 +92,34 @@ class TagController extends \Phramework\Examples\JSONAPI\Controller
             Tag::class,
             [Phramework::METHOD_GET],
             [],
+            []
+        );
+    }
+
+    /**
+     * Access resource's relationship resources
+     * `/tag/{id}/{relationship}/` handler
+     * @param \stdClass $params
+     * @param string    $method
+     * @param array     $headers
+     * @param string    $id
+     * @param string    $relationship
+     */
+    public static function byIdRelationshipsRelated(
+        \stdClass $params,
+        string $method,
+        array $headers,
+        string $id,
+        string $relationship
+    ) {
+        static::handleByIdRelationshipsRelated(
+            $params,
+            $method,
+            $headers,
+            $id,
+            $relationship,
+            Tag::class,
+            [\Phramework\Phramework::METHOD_GET],
             []
         );
     }

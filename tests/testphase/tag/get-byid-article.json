@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "order": 21
+  },
+  "request": {
+    "url": "tag/{{tagId}}/relationships/article",
+    "method": "GET",
+    "headers": [
+      "{{{headerRequestAccept}}}",
+      "{{{headerRequestContentType}}}"
+    ]
+  },
+  "response": {
+    "statusCode": 200,
+    "headers": {
+      "Content-Type": "{{{headerResponseContentType}}}"
+    },
+    "ruleObjects": [
+      "{{{responseBodyJsonapiResource}}}"
+    ]
+  }
+}
