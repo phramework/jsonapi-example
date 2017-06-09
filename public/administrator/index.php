@@ -4,9 +4,6 @@ declare(strict_types=1);
 //This autoload path is for loading current version of phramework and other required packages
 require __DIR__ . '/../../vendor/autoload.php';
 
-//define controller namespace, as shortcut
-define('NS', 'Phramework\\Examples\\JSONAPI\\Controllers\\Administrator\\');
-
 use \Phramework\Phramework;
 
 /**
@@ -17,53 +14,13 @@ $APP = function () {
     //Include settings
     $settings = include __DIR__ . '/../../settings.php';
 
-    /**
+    /*
      * Prepare routing
      */
-    $URIStrategy = new \Phramework\URIStrategy\URITemplate([
-        [
-            'user/',
-            NS . 'UserController',
-            'GET',
-            Phramework::METHOD_GET,
-            true
-        ],
-        [
-            'user/{id}',
-            NS . 'UserController',
-            'GETById',
-            Phramework::METHOD_GET,
-            true
-        ],
-        [
-            'user/',
-            NS . 'UserController',
-            'POST',
-            Phramework::METHOD_POST,
-            true
-        ],
-        [
-            'user/{id}',
-            NS . 'UserController',
-            'PATCH',
-            Phramework::METHOD_PATCH,
-            true
-        ],
-        [
-            'user/{id}',
-            NS . 'UserController',
-            'DELETE',
-            Phramework::METHOD_DELETE,
-            true
-        ],
-        [
-            'user/{id}/relationships/{relationship}',
-            NS . 'UserController',
-            'byIdRelationships',
-            Phramework::METHOD_ANY,
-            true
-        ],
-    ]);
+    $URIStrategy = new \Phramework\URIStrategy\URITemplate(
+        (new \Phramework\Examples\JSONAPI\Controllers\Administrator\Routing())
+            ->getRouting()
+    );
 
     //Initialize API with settings and routing
     $phramework = new Phramework($settings, $URIStrategy);
@@ -75,7 +32,7 @@ $APP = function () {
 
     //Set preferred viewer as JSON API viewer
     Phramework::setViewer(
-        \Phramework\JSONAPI\Viewers\JSONAPI::class
+        \Phramework\Examples\JSONAPI\Viewers\JSONAPI::class
     );
 
     //Set authentication class
