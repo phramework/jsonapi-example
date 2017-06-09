@@ -129,9 +129,26 @@ composer test
 - Unit tests available at `/tests/phpunit/` directory using [PHPUnit](https://phpunit.de/)
 - Request tests available at `/tests/testphase/` directory using [phramework/testphase](https://github.com/phramework/testphase)
 
+### Testphase
+
+To execute only testphase tests
+```bash
+composer testphase
+```
+
+To generate an overview for testphase tests execute
+```bash
+composer testphase-report
+```
+
+More about writing testphase tests at https://github.com/phramework/testphase
+
 ## Lint code
 Lint code using [PSR-2](http://www.php-fig.org/psr/psr-2/) coding style
 
 ```bash
 composer lint
 ```
+
+## Local settings
+Read localsettings.example.php if you need to modify any of the settings localy, without committing the changes.
