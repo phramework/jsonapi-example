@@ -25,6 +25,7 @@ use Phramework\Examples\JSONAPI\Models\Administrator\User;
 /**
  * @license https://www.apache.org/licenses/LICENSE-2.0 Apache-2.0
  * @author Xenofon Spafaridis <nohponex@gmail.com>
+ * @since 0.0.0
  */
 class UserController extends \Phramework\Examples\JSONAPI\Controller
 {
@@ -34,8 +35,11 @@ class UserController extends \Phramework\Examples\JSONAPI\Controller
      * @param string $method       Request method
      * @param array  $headers      Request headers
      */
-    public static function GET($params, $method, $headers)
-    {
+    public static function GET(
+        \stdClass $params,
+        string $method,
+        array $headers
+    ) {
         $user = Request::checkPermission();
 
         static::handleGET(
@@ -53,8 +57,12 @@ class UserController extends \Phramework\Examples\JSONAPI\Controller
      * @param array  $headers      Request headers
      * @param string $id           Resource id
      */
-    public static function GETById($params, $method, $headers, string $id)
-    {
+    public static function GETById(
+        \stdClass $params,
+        string $method,
+        array $headers,
+        string $id
+    ) {
         $user = Request::checkPermission();
 
         static::handleGETById(
@@ -72,8 +80,11 @@ class UserController extends \Phramework\Examples\JSONAPI\Controller
      * @param string $method       Request method
      * @param array  $headers      Request headers
      */
-    public static function POST(\stdClass $params, string $method, array $headers)
-    {
+    public static function POST(
+        \stdClass $params,
+        string $method,
+        array $headers
+    ) {
         $user = Request::checkPermission();
 
         static::handlePOST(
@@ -141,9 +152,9 @@ class UserController extends \Phramework\Examples\JSONAPI\Controller
      * @param string $relationship Relationship
      */
     public static function byIdRelationships(
-        $params,
-        $method,
-        $headers,
+        \stdClass $params,
+        string $method,
+        array $headers,
         string $id,
         string $relationship
     ) {

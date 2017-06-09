@@ -177,7 +177,7 @@ class ArticleController extends \Phramework\Examples\JSONAPI\Controller
     }
 
     /**
-     * Manage resource's relationships
+     * Access resource's relationships
      * `/article/{id}/relationships/{relationship}/` handler
      * @param \stdClass $params       Request parameters
      * @param string $method       Request method
@@ -186,9 +186,9 @@ class ArticleController extends \Phramework\Examples\JSONAPI\Controller
      * @param string $relationship Relationship
      */
     public static function byIdRelationships(
-        $params,
-        $method,
-        $headers,
+        \stdClass $params,
+        string $method,
+        array $headers,
         string $id,
         string $relationship
     ) {
