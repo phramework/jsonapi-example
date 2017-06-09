@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 /*
- * Copyright 2015-2016 Xenofon Spafaridis
+ * Copyright 2017-2018 Vasilis Manolas
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,13 +33,13 @@ use Phramework\Validate\UnsignedIntegerValidator;
 
 /**
  * @license https://www.apache.org/licenses/LICENSE-2.0 Apache-2.0
- * @author Xenofon Spafaridis <nohponex@gmail.com>
+ * @author Vasilis Manolas <vasileiosmanolas@gmail.com>
  */
-class Article extends \Phramework\Examples\JSONAPI\Model
+class Review extends \Phramework\Examples\JSONAPI\Model
 {
-    protected static $type      = 'article';
-    protected static $endpoint  = 'article';
-    protected static $table     = 'article';
+    protected static $type      = 'review';
+    protected static $endpoint  = 'review';
+    protected static $table     = 'review';
 
     /**
      * @param Page     $page
@@ -59,8 +59,8 @@ class Article extends \Phramework\Examples\JSONAPI\Model
         $query = static::handleGet(
             'SELECT 
               {{fields}},
-              "creator-user_id"
-            FROM "article"
+              "user_id"
+            FROM "review"
             WHERE "status" <> ?
               {{filter}}
               {{sort}}
@@ -89,7 +89,7 @@ class Article extends \Phramework\Examples\JSONAPI\Model
 
     /**
      * Defines model's validator for POST requests
-     * also it may be used to validate filter directive values if any
+     * also may be used for PATCH requests and to validate filter directive values
      * @return ValidationModel
      */
     public static function getValidationModel()
@@ -97,19 +97,18 @@ class Article extends \Phramework\Examples\JSONAPI\Model
         return new ValidationModel(
             new ObjectValidator( //attributes
                 (object) [ //properties
-                    'title'  => new StringValidator(1, 255),
-                    'body'   => new StringValidator(1, 1024),
+                    'score'  => new UnsignedIntegerValidator(1, 10),
                     'status' => (new UnsignedIntegerValidator(0, 1))
                         ->setDefault(1)
                 ],
-                ['title', 'body'], //required attributes,
+                ['score'], //required attributes,
                 false //additional properties
             ),
             new ObjectValidator( //relationships
                 (object) [
-                    'creator' => User::getIdValidator()
+                    'reviewer' => User::getIdValidator()
                 ],
-                ['creator'], //required relationships,
+                [], //required relationships,
                 false //additional properties
             )
         );
@@ -120,8 +119,7 @@ class Article extends \Phramework\Examples\JSONAPI\Model
         return new ValidationModel(
             new ObjectValidator( //attributes
                 (object) [ //properties
-                    'title'  => new StringValidator(1, 255),
-                    'body'   => new StringValidator(1, 1024),
+                    'score'  => new UnsignedIntegerValidator(1, 10),
                     'status' => new UnsignedIntegerValidator(0, 1)
                 ],
                 [], //required attributes,
@@ -129,7 +127,7 @@ class Article extends \Phramework\Examples\JSONAPI\Model
             ),
             new ObjectValidator( //relationships
                 (object) [
-                    'creator' => User::getIdValidator()
+                    'reviewer' => User::getIdValidator()
                 ],
                 [], //required relationships
                 false
@@ -140,43 +138,26 @@ class Article extends \Phramework\Examples\JSONAPI\Model
     /**
      * @return string[]
      */
+    public static function getMutable()
+    {
+        return ['score', 'status']; // 'user_id',   --> do I need to add this?
+    }
+
+    /**
+     * @return string[]
+     */
     public static function getFields()
     {
-        return ['title', 'body'];
+        return ['score']; // 'user_id',   --> do I need to add this?
     }
 
     /**
-     * Get all articles with given tag id
-     * @param string $tagId
+     * Get all reviews with given article id
+     * @param string $articleId
      * @return string[]
      */
-    public static function getRelationshipTag(
-        string $tagId,
-        Fields $fields = null,
-        $flags = Resource::PARSE_DEFAULT
-    ) {
-        $ids = Database::executeAndFetchAllArray(
-            'SELECT "article-tag"."article_id"
-            FROM "article-tag"
-            JOIN "article"
-             ON "article"."id" = "article-tag"."article_id"
-            WHERE
-              "article-tag"."tag_id" = ?
-              AND "article-tag"."status" <> 0
-              AND "article"."status" <> 0',
-            [$tagId]
-        );
-
-        return $ids;
-    }
-
-    /**
-     * Get all articles with given review id
-     * @param string $reviewId
-     * @return string[]
-     */
-    public static function getRelationshipReview(
-        string $reviewId,
+    public static function getRelationshipArticle(
+        string $articleId,
         Fields $fields = null,
         $flags = Resource::PARSE_DEFAULT
     ) {
@@ -186,36 +167,36 @@ class Article extends \Phramework\Examples\JSONAPI\Model
             JOIN "article"
              ON "article"."id" = "article-review"."article_id"
             WHERE
-              "article-review"."review_id" = ?
+              "article-review"."article_id" = ?
               AND "article-review"."status" <> 0
               AND "article"."status" <> 0',
-            [$reviewId]
+            [$articleId]
         );
 
         return $ids;
     }
 
-    /**
-     * Get all articles with given creator id
-     * @param string $userId
-     * @return string[]
-     */
-    public static function getRelationshipUser(
-        string $userId,
-        Fields $fields = null,
-        $flags = Resource::PARSE_DEFAULT
-    ) : array {
-        $ids = Database::executeAndFetchAllArray(
-            'SELECT "article"."id"
-            FROM "article"
-            WHERE
-              "article"."creator-user_id" = ?
-              AND "article"."status" <> 0',
-            [$userId]
-        );
-
-        return $ids;
-    }
+//    /**
+//     * Get all articles with given creator id
+//     * @param string $userId
+//     * @return string[]
+//     */
+//    public static function getRelationshipUser(
+//        string $userId,
+//        Fields $fields = null,
+//        $flags = Resource::PARSE_DEFAULT
+//    ) : array {
+//        $ids = Database::executeAndFetchAllArray(
+//            'SELECT "article"."id"
+//            FROM "article"
+//            WHERE
+//              "article"."creator-user_id" = ?
+//              AND "article"."status" <> 0',
+//            [$userId]
+//        );
+//
+//        return $ids;
+//    }
 
     /**
      * @return string[]
@@ -231,33 +212,21 @@ class Article extends \Phramework\Examples\JSONAPI\Model
     public static function getRelationships()
     {
         return (object) [
-            'creator' => new Relationship(
-                User::class,
-                Relationship::TYPE_TO_ONE,
-                'creator-user_id', //source data attribute
-                null, //source data callback
-                Relationship::FLAG_DEFAULT | Relationship::FLAG_DATA
-            ),
-            'tag' => new Relationship(
-                Tag::class,
+//            'creator' => new Relationship(
+//                User::class,
+//                Relationship::TYPE_TO_ONE,
+//                'creator-user_id', //source data attribute
+//                null, //source data callback
+//                Relationship::FLAG_DEFAULT | Relationship::FLAG_DATA
+//            ),
+            'article' => new Relationship(
+                Article::class,
                 Relationship::TYPE_TO_MANY,
                 null, //source data attribute
                 (object) [ //source data callback
                     Phramework::METHOD_GET => [
-                        Tag::class,
-                        'getRelationshipArticle'
-                    ]
-                ],
-                Relationship::FLAG_DEFAULT | Relationship::FLAG_DATA
-            ),
-            'review' => new Relationship(
-                Review::class,
-                Relationship::TYPE_TO_MANY,
-                null, //source data attribute
-                (object) [ //source data callback
-                    Phramework::METHOD_GET => [
-                        Review::class,
-                        'getRelationshipArticle'
+                        Article::class,
+                        'getRelationshipReview'
                     ]
                 ],
                 Relationship::FLAG_DEFAULT | Relationship::FLAG_DATA
