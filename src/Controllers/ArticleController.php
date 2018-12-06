@@ -34,8 +34,11 @@ class ArticleController extends \Phramework\Examples\JSONAPI\Controller
      * @param string $method       Request method
      * @param array  $headers      Request headers
      */
-    public static function GET(\stdClass $params, string $method, array $headers)
-    {
+    public static function GET(
+        \stdClass $params,
+        string $method,
+        array $headers
+    ) {
         static::handleGET(
             $params,
             Article::class,
@@ -52,8 +55,12 @@ class ArticleController extends \Phramework\Examples\JSONAPI\Controller
      * @param array  $headers      Request headers
      * @param string $id           Resource id
      */
-    public static function GETById(\stdClass $params, string $method, array $headers, string $id)
-    {
+    public static function GETById(
+        \stdClass $params,
+        string $method,
+        array $headers,
+        string $id
+    ) {
         static::handleGETById(
             $params,
             $id,
@@ -69,8 +76,11 @@ class ArticleController extends \Phramework\Examples\JSONAPI\Controller
      * @param string $method       Request method
      * @param array  $headers      Request headers
      */
-    public static function POST(\stdClass $params, string $method, array $headers)
-    {
+    public static function POST(
+        \stdClass $params,
+        string $method,
+        array $headers
+    ) {
         $now = time();
 
         static::handlePOST(
@@ -201,6 +211,34 @@ class ArticleController extends \Phramework\Examples\JSONAPI\Controller
             Article::class,
             [Phramework::METHOD_GET],
             [],
+            []
+        );
+    }
+
+    /**
+     * Access resource's relationship resources
+     * `/article/{id}/{relationship}/` handler
+     * @param \stdClass $params
+     * @param string    $method
+     * @param array     $headers
+     * @param string    $id
+     * @param string    $relationship
+     */
+    public static function byIdRelationshipsRelated(
+        \stdClass $params,
+        string $method,
+        array $headers,
+        string $id,
+        string $relationship
+    ) {
+        static::handleByIdRelationshipsRelated(
+            $params,
+            $method,
+            $headers,
+            $id,
+            $relationship,
+            Article::class,
+            [\Phramework\Phramework::METHOD_GET],
             []
         );
     }
